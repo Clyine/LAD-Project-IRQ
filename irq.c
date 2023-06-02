@@ -1,4 +1,4 @@
-//for printf to work properly for uint32_t please refer to #971 on PicoSDK
+//for printf to work properly for uint64_t please refer to #971 on PicoSDK
 //https://github.com/raspberrypi/pico-sdk/pull/971
 
 #include <stdio.h>
@@ -11,8 +11,6 @@
 #include "hardware/dma.h"
 #include "pico/time.h"
 
-
-#define PWM_COUNTER 1000 
 #define pinENA 8
 #define pinENB 9
 
@@ -37,7 +35,6 @@ int main()
     initPWM();
 
     gpio_set_irq_enabled(sensor, GPIO_IRQ_EDGE_RISE | GPIO_IRQ_EDGE_FALL, true);
-    //gpio_set_irq_enabled(sensor, GPIO_IRQ_EDGE_FALL, true);
 
     gpio_add_raw_irq_handler_masked(sensor, process);
     irq_set_enabled(IO_IRQ_BANK0, true);
@@ -63,12 +60,6 @@ bool initPWM()
 
     pwm_set_enabled(pwm_gpio_to_slice_num(pinENA), true);
     pwm_set_enabled(pwm_gpio_to_slice_num(pinENB), true);
-    // Set PWM counter to given value. Check docs for slice info
-    // Each gpio pin is assigned to a slice number with 2 channels each.
-    // each slice uses the same timer, same counter
-    // Channel A creates a CCR to do something on when it hits the value assigned to Chan A
-    // on below, the counter is set at 10000 for slice 0 (pin 0, 1), Channel A is at a duty cycle of 85% and B is at 65%
-    //pwm_set_freq_duty(pwm_gpio_to_slice_num(pinENA), PWM_CHAN_A, 1, 50);
 
     return true;
 }
