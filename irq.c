@@ -43,7 +43,8 @@ int main()
 
     while (1)
     {
-        printf("%d, %d\n", average(&cycleDuration[0])/5), average(&onDuration[0])/5;
+        printf("0,%d\n", sum(&cycleDuration[0])/5);
+        printf("1,%d\n", sum(&onDuration[0])/5);
         sleep_ms(500);
     }
 }
@@ -56,7 +57,7 @@ bool initPWM()
     gpio_set_function(pinENB, GPIO_FUNC_PWM);
     
     pwm_set_freq_duty(pwm_gpio_to_slice_num(pinENA), pwm_gpio_to_channel(pinENA), 100, 50);
-    pwm_set_freq_duty(pwm_gpio_to_slice_num(pinENB), pwm_gpio_to_channel(pinENB), 100, 30);
+    pwm_set_freq_duty(pwm_gpio_to_slice_num(pinENB), pwm_gpio_to_channel(pinENB), 50, 30);
 
     pwm_set_enabled(pwm_gpio_to_slice_num(pinENA), true);
     pwm_set_enabled(pwm_gpio_to_slice_num(pinENB), true);
